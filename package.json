@@ -1,0 +1,24 @@
+{
+  "name": "expanse-starlight",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Expanse User Guide documentation site built with Astro Starlight",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lhci": "lhci autorun"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/starlight": "^0.42.5",
+    "astro": "^7.3.5",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1"
+  }
+}

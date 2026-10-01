@@ -1,0 +1,55 @@
+name: PR Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        if: github.event.action != 'closed'
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        run: npm ci
+
+      # Build the PR with the preview base URL so that assets and internal
+      # links resolve under /expanse-starlight/pr-preview/pr-<number>/
+      - name: Build website
+        if: github.event.action != 'closed'
+        run: npm run build
+        env:
+          BASE_URL: /expanse-starlight/pr-preview/pr-${{ github.event.number }}/
+
+      # Deploys the preview on opened/reopened/synchronize and removes it on
+      # close (merged or not). Leaves a sticky comment on the PR with the
+      # preview URL once the GitHub Pages deployment is live.
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: dist
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          qr-code: false
+          wait-for-pages-deployment: true

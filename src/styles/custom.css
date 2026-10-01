@@ -1,0 +1,177 @@
+/* SDSC / UC San Diego brand styling
+   Colors: PMS 2767 navy (#182B49), PMS 1245 gold (#C69214)
+   Fonts: Teko (headings), Source Sans 3 (body) */
+
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap");
+
+:root {
+  /* Dark mode brand palette */
+  --sl-color-accent-low: #22385c;
+  --sl-color-accent: #9db9e6;
+  --sl-color-accent-high: #9db9e6;
+  --sl-color-bg-nav: #16233a;
+  --sl-font: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+:root[data-theme="light"] {
+  /* Light mode brand palette */
+  --sl-color-accent-low: #e4eaf3;
+  --sl-color-accent: #182b49;
+  --sl-color-accent-high: #182b49;
+  --sl-color-bg-nav: #ffffff;
+}
+
+/* headings use Teko with slightly reduced size to balance the tall x-height */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Teko", var(--sl-font);
+  letter-spacing: 0.01em;
+  line-height: var(--sl-line-height-headings);
+}
+
+h1 {
+  font-size: var(--sl-text-3xl);
+}
+
+h2 {
+  font-size: var(--sl-text-2xl);
+  font-weight: 500;
+  margin-top: 1.6rem;
+}
+
+h3 {
+  font-size: var(--sl-text-xl);
+  font-weight: 500;
+}
+
+h4 {
+  font-size: var(--sl-text-lg);
+  font-weight: 500;
+}
+
+@media (min-width: 50em) {
+  h1 {
+    font-size: var(--sl-text-4xl);
+  }
+}
+
+/* gold underline accent for h2 */
+.sl-markdown-content :where(h2) {
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #c69214;
+}
+
+/* navbar: gold bottom border under the header bar */
+.header {
+  border-bottom: 4px solid #c69214;
+}
+
+/* navbar title */
+.header .site-title {
+  font-family: "Teko", var(--sl-font);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* sidebar group labels */
+.sidebar-content .sidebar-heading,
+.sidebar-content [role="group"] > a {
+  font-family: "Teko", var(--sl-font);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* active sidebar link gets gold left border */
+.sidebar-content a[aria-current="page"] {
+  border-left: 3px solid #c69214;
+  padding-left: calc(0.75rem - 3px);
+}
+
+/* table styling: wrapper allows horizontal scrolling of wide tables
+   without overflowing the page */
+.table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sl-markdown-content :where(table) {
+  display: table;
+  width: 100%;
+  margin-bottom: var(--sl-text-base);
+}
+
+.sl-markdown-content :where(thead th) {
+  background-color: #182b49;
+  color: #fff;
+  border-color: #152641;
+}
+
+:root[data-theme="dark"] .sl-markdown-content :where(thead th) {
+  background-color: #22385c;
+  border-color: #1a2c4a;
+}
+
+.sl-markdown-content :where(thead th, td) {
+  vertical-align: top;
+}
+
+/* code blocks: gold left border */
+.expressive-code {
+  border-left: 3px solid #c69214;
+}
+
+/* inline code contrast fix in dark mode */
+:root[data-theme="dark"] .sl-markdown-content :where(code:not(pre code)) {
+  background-color: #22385c;
+}
+
+/* links in body text: always underlined so they are not distinguished
+   by color alone (WCAG 1.4.1) */
+.sl-markdown-content :where(a:not(.anchor)) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.sl-markdown-content :where(a:not(.anchor)):hover {
+  text-decoration-thickness: 2px;
+}
+
+/* "Edit page" link: visible gold button (matches Docusaurus prototype) */
+footer .meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border: 2px solid #c69214;
+  border-radius: 0;
+  color: var(--sl-color-text);
+  background-color: transparent;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+footer .meta a:hover {
+  background-color: #c69214;
+  color: #182b49;
+  text-decoration: none;
+}
+
+:root[data-theme="dark"] footer .meta a {
+  color: var(--sl-color-white);
+}
+
+:root[data-theme="dark"] footer .meta a:hover {
+  color: #182b49;
+}

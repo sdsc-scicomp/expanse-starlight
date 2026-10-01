@@ -1,0 +1,169 @@
+---
+// Extended page footer: keeps Starlight's EditLink / LastUpdated / Pagination
+// and adds the SDSC-branded link columns present in the Docusaurus prototype.
+import EditLink from "virtual:starlight/components/EditLink";
+import LastUpdated from "virtual:starlight/components/LastUpdated";
+import Pagination from "virtual:starlight/components/Pagination";
+import config from "virtual:starlight/user-config";
+import { Icon } from "@astrojs/starlight/components";
+
+const base = import.meta.env.BASE_URL;
+const year = new Date().getFullYear();
+
+const links = [
+  {
+    title: "Docs",
+    items: [
+      { label: "Technical Summary", href: `${base}` },
+      { label: "System Access", href: `${base}system-access` },
+      { label: "Running Jobs", href: `${base}running-jobs` },
+    ],
+  },
+  {
+    title: "Expanse",
+    items: [
+      {
+        label: "Expanse @ SDSC",
+        href: "https://www.sdsc.edu/systems/expanse/index.html",
+      },
+      {
+        label: "Expanse User Portal",
+        href: "https://portal.expanse.sdsc.edu",
+      },
+      { label: "ACCESS Program", href: "https://access-ci.org/" },
+    ],
+  },
+  {
+    title: "More",
+    items: [
+      {
+        label: "GitHub",
+        href: "https://github.com/sdsc-scicomp/expanse-starlight",
+      },
+      {
+        label: "SDSC Support",
+        href: "https://www.sdsc.edu/support/index.html",
+      },
+      {
+        label: "ACCESS Help Desk",
+        href: "https://support.access-ci.org/",
+      },
+    ],
+  },
+];
+---
+
+<footer class="sl-flex">
+  <div class="meta sl-flex">
+    <EditLink />
+    <LastUpdated />
+  </div>
+  <Pagination />
+  <div class="site-footer">
+    <div class="site-footer__links">
+      {
+        links.map((group) => (
+          <div>
+            <h2 class="site-footer__title">{group.title}</h2>
+            <ul>
+              {group.items.map((item) => (
+                <li><a href={item.href}>{item.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="site-footer__copy">
+      Copyright © {year} San Diego Supercomputer Center, UC San Diego.
+    </p>
+  </div>
+
+  {
+    config.credits && (
+      <a class="kudos sl-flex" href="https://starlight.astro.build">
+        <Icon name="starlight" /> {Astro.locals.t("builtWithStarlight.label")}
+      </a>
+    )
+  }
+</footer>
+
+<style>
+  @layer starlight.core {
+    footer {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .meta {
+      gap: 0.75rem 3rem;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      font-size: var(--sl-text-sm);
+      color: var(--sl-color-gray-3);
+    }
+    .meta > :global(p:only-child) {
+      margin-inline-start: auto;
+    }
+
+    .kudos {
+      align-items: center;
+      gap: 0.5em;
+      margin: 1.5rem auto;
+      font-size: var(--sl-text-xs);
+      text-decoration: none;
+      color: var(--sl-color-gray-3);
+    }
+    .kudos:hover {
+      color: var(--sl-color-white);
+    }
+
+    /* SDSC brand footer */
+    .site-footer {
+      background-color: #182b49;
+      color: #f5f3ee;
+      border-top: 4px solid #c69214;
+      padding: 2rem 0;
+      margin-top: 1.5rem;
+      border-radius: 0.25rem;
+    }
+    .site-footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .site-footer__title {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    .site-footer a {
+      color: #d9d9d9;
+      text-decoration: none;
+    }
+    .site-footer a:hover {
+      color: #d9a72e;
+    }
+    .site-footer__copy {
+      color: #d9d9d9;
+      font-size: var(--sl-text-sm);
+      margin-top: 1.5rem;
+    }
+  }
+
+  @layer starlight.components {
+    .kudos :global(svg) {
+      color: var(--sl-color-orange);
+    }
+  }
+</style>
