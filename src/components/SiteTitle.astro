@@ -1,0 +1,123 @@
+---
+// Brand lockup: SDSC wordmark + stacked "Expanse / User Guide" title,
+// matching the Docusaurus prototype. The stacked layout keeps the title
+// compact on mobile where the wide wordmark would clip a single-line title.
+import { logos } from "virtual:starlight/user-images";
+import config from "virtual:starlight/user-config";
+
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+const [main, ...rest] = siteTitle.split(" ");
+const sub = rest.join(" ");
+---
+
+<a href={siteTitleHref} class="site-title sl-flex">
+  {
+    config.logo &&
+      logos.dark && (
+        <>
+          <img
+            class:list={{ "light:sl-hidden print:hidden": !("src" in config.logo) }}
+            alt={config.logo.alt}
+            src={logos.dark.src}
+            width={logos.dark.width}
+            height={logos.dark.height}
+          />
+          {!("src" in config.logo) && (
+            <img
+              class="dark:sl-hidden print:block"
+              alt={config.logo.alt}
+              src={logos.light?.src}
+              width={logos.light?.width}
+              height={logos.light?.height}
+            />
+          )}
+        </>
+      )
+  }
+  <span class="site-title__text" translate="no">
+    <span class="site-title__main">{main}</span>
+    <span class="site-title__sub">{sub}</span>
+  </span>
+</a>
+
+<style>
+  @layer starlight.core {
+    .site-title {
+      align-items: center;
+      gap: var(--sl-nav-gap);
+      font-weight: 600;
+      color: var(--sl-color-text-accent);
+      text-decoration: none;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    img {
+      height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: 0 50%;
+    }
+
+    .site-title__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      line-height: 1;
+      border-left: 2px solid #c69214;
+      padding-left: 0.65rem;
+    }
+
+    .site-title__main {
+      font-family: "Teko", var(--sl-font);
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      color: var(--sl-color-text-accent);
+    }
+
+    .site-title__sub {
+      font-family: "Teko", var(--sl-font);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      line-height: 1.15;
+      color: var(--sl-color-gray-3);
+    }
+
+    :root[data-theme="dark"] .site-title__main {
+      color: var(--sl-color-text);
+    }
+
+    /* mobile: smaller wordmark so the lockup fits narrow screens */
+    @media (max-width: 50em) {
+      .site-title__main {
+        font-size: 1.15rem;
+      }
+
+      .site-title__sub {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+      }
+
+      .site-title__text {
+        padding-left: 0.5rem;
+      }
+
+      img {
+        max-height: 20px;
+        width: auto;
+      }
+    }
+
+    @media (max-width: 22em) {
+      img {
+        max-height: 18px;
+      }
+    }
+  }
+</style>

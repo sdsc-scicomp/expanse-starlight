@@ -74,14 +74,7 @@ header.header {
   border-bottom: 4px solid #c69214;
 }
 
-/* navbar title */
-.header .site-title {
-  font-family: "Teko", var(--sl-font);
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: none;
-}
+/* navbar title lockup is built in src/components/SiteTitle.astro */
 
 /* sidebar group labels */
 .sidebar-content .sidebar-heading,
